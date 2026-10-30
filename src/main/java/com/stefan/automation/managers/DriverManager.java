@@ -3,71 +3,24 @@ package com.stefan.automation.managers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 
 public final class DriverManager {
 
-    private static final String BROWSER_TYPE = ConfigReaderManager.getProperty("browserType");
-    private static final String INCOGNITO_MODE = ConfigReaderManager.getProperty("incognitoMode");
     private static final String HEADLESS_MODE = ConfigReaderManager.getProperty("headlessMode");
     private static DriverManager instance;
     private WebDriver driver;
 
     private DriverManager() {
-        switch (BROWSER_TYPE.toUpperCase()) {
-            case "CHROME" -> {
-                ChromeOptions options = new ChromeOptions();
-                if (INCOGNITO_MODE.equals("enabled")) {
-                    options.addArguments("--incognito");
-                    Log.info("Initiating Chrome driver instance with incognito mode enabled");
-                } else {
-                    Log.info("Initiating Chrome driver instance with incognito mode disabled");
-                }
-                if (HEADLESS_MODE.equals("enabled")) {
-                    options.addArguments("--headless");
-                    Log.info("Initiating Chrome driver instance with headless mode enabled");
-                } else {
-                    Log.info("Initiating Chrome driver instance with headless mode disabled");
-                }
-                driver = new ChromeDriver(options);
-            }
-            case "EDGE" -> {
-                EdgeOptions options = new EdgeOptions();
-                if (INCOGNITO_MODE.equals("enabled")) {
-                    options.addArguments("--inprivate");
-                    Log.info("Initiating Edge driver instance with incognito mode enabled");
-                } else {
-                    Log.info("Initiating Edge driver instance with incognito mode disabled");
-                }
-                if (HEADLESS_MODE.equals("enabled")) {
-                    options.addArguments("--headless");
-                    Log.info("Initiating Edge driver instance with headless mode enabled");
-                } else {
-                    Log.info("Initiating Edge driver instance with headless mode disabled");
-                }
-                driver = new EdgeDriver(options);
-            }
-            case "FIREFOX" -> {
-                FirefoxOptions options = new FirefoxOptions();
-                if (INCOGNITO_MODE.equals("enabled")) {
-                    options.addArguments("-private-window");
-                    Log.info("Initiating FireFox driver instance with incognito mode enabled");
-                } else {
-                    Log.info("Initiating FireFox driver instance with incognito mode disabled");
-                }
-                if (HEADLESS_MODE.equals("enabled")) {
-                    options.addArguments("--headless");
-                    Log.info("Initiating FireFox driver instance with headless mode enabled");
-                } else {
-                    Log.info("Initiating FireFox driver instance with headless mode disabled");
-                }
-                driver = new FirefoxDriver(options);
-            }
-            default -> throw new IllegalArgumentException("Invalid browser name specified!");
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--incognito");
+        options.addArguments("--no-sandbox");
+        if (HEADLESS_MODE.equals("enabled")) {
+            options.addArguments("--headless");
+            Log.info("Initiating Chrome driver instance with headless mode enabled");
+        } else {
+            Log.info("Initiating Chrome driver instance with headless mode disabled");
         }
+        driver = new ChromeDriver(options);
     }
 
     public static DriverManager getInstance() {

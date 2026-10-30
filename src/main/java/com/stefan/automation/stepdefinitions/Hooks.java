@@ -17,12 +17,11 @@ public class Hooks {
     protected static ExtentReports extentReports;
     protected ExtentTest extentTest;
     private Instant startTime;
-    private static final String FULL_SCREEN_MODE = ConfigReaderManager.getProperty("fullScreenMode");
     private static final int PAGE_LOAD_WAIT = Integer.parseInt(ConfigReaderManager.getProperty("pageLoadWait"));
-    private static final String EMAIL_REPORT = ConfigReaderManager.getProperty("emailReport");
 
     @BeforeAll
     public static void beforeAllTest() {
+        Log.info("Test suite execution has started");
         extentReports = ExtentReportManager.getReportInstance();
     }
 
@@ -34,10 +33,8 @@ public class Hooks {
         Log.info("Starting test case: " + scenarioName);
         if (!ApiClient.isApiTest(scenario)) {
             driver = DriverManager.getInstance().getDriver();
-            if (FULL_SCREEN_MODE.equals("enabled")) {
-                Log.info("Starting the browser in full screen mode");
-                driver.manage().window().maximize();
-            }
+            Log.info("Starting the browser in full screen mode");
+            driver.manage().window().maximize();
             Log.info("Waiting page to load completely (timeout: " + PAGE_LOAD_WAIT + " seconds)");
             driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(PAGE_LOAD_WAIT));
         }
@@ -74,10 +71,8 @@ public class Hooks {
 
     @AfterAll
     public static void afterAllTest() {
+        Log.info("Test suite execution has ended");
         extentReports.flush();
-        if (EMAIL_REPORT.equals("enabled")) {
-            EmailManager.sendTestReport(ExtentReportManager.reportPath);
-        }
     }
 
 }

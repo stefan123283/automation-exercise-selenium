@@ -2,7 +2,7 @@ package com.stefan.automation.managers;
 
 import com.github.javafaker.Faker;
 import com.stefan.automation.models.User;
-import org.apache.commons.lang3.RandomStringUtils;
+import java.util.UUID;
 
 public final class FakeDataManager {
 
@@ -36,7 +36,7 @@ public final class FakeDataManager {
     }
 
     public static String generateRandomEmail() {
-        return RandomStringUtils.randomAlphanumeric(5) + "@" + RandomStringUtils.randomAlphanumeric(5);
+        return generateRandomUsername() + "_" + UUID.randomUUID() + "@test.com";
     }
 
     public static String generateRandomPassword() {
@@ -88,7 +88,7 @@ public final class FakeDataManager {
         return faker.phoneNumber().phoneNumber();
     }
 
-    public static String generateRandomCardNumber(){
+    public static String generateRandomCardNumber() {
         return faker.business().creditCardNumber();
     }
 

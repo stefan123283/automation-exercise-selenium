@@ -129,7 +129,6 @@ public class HomePage extends Page {
         Log.info("Clicking scroll up arrow");
         ExtentReportManager.addTestStep("User clicks the scroll up arrow");
         clickElement(scrollUpArrow, "Scroll up arrow");
-        clickElement(scrollUpArrow, "Scroll up arrow");
     }
 
     public void pageIsScrolledUp() {

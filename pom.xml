@@ -16,8 +16,6 @@
         <log4j.version>2.26.0</log4j.version>
         <extentreports.version>5.1.2</extentreports.version>
         <apachecommons.version>2.22.0</apachecommons.version>
-        <apachepoi.version>5.5.1</apachepoi.version>
-        <jakartamail.version>2.0.2</jakartamail.version>
         <javafaker.version>1.0.2</javafaker.version>
         <junit.version>6.1.0</junit.version>
         <cucumber.version>7.34.3</cucumber.version>
@@ -58,20 +56,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${apachecommons.version}</version>
-        </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-        <dependency>
-            <groupId>org.apache.poi</groupId>
-            <artifactId>poi-ooxml</artifactId>
-            <version>${apachepoi.version}</version>
-        </dependency>
-
-        <!-- Source: https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>jakarta.mail</artifactId>
-            <version>${jakartamail.version}</version>
         </dependency>
 
         <!-- Source: https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->

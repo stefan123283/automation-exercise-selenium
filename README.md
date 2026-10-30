@@ -1,121 +1,200 @@
-# Automation Exercise Test Framework (ATF)
+# <img src="assets/selenium-logo.png" alt="Selenium" width="24"> Automation Exercise Selenium Test Automation Framework
 
-A comprehensive, **Behavior-Driven Development (BDD)** automation test framework for testing UI and API functionality. This portfolio project demonstrates professional QA automation practices with complete test coverage of the [Automation Exercise](https://automationexercise.com) e-commerce platform.
+A **Java**-based test automation framework for the [Automation Exercise](https://automationexercise.com) application,
+combining **Selenium** and **REST Assured** for comprehensive UI and API testing, with **Cucumber** BDD, reusable design
+patterns, and maintainable
+architecture. Integrates **GitHub Actions** for continuous integration, **ExtentReports** for interactive reporting, and
+**Log4j2** for structured logging, supporting reliable test execution, efficient debugging, and scalability.
 
-## 📊 Test Coverage
+## 📑 Table of Contents
 
-- **UI Test Cases**: 26/26 ✅
-- **API Test Cases**: 14/14 ✅
-- **Total Scenarios**: 40 comprehensive test scenarios
+- [🏗️ Architecture & Design Patterns](#-architecture--design-patterns)
+- [🛠️ Tech Stack](#-tech-stack)
+- [🧪 Test Coverage Summary](#-test-coverage-summary)
+    - [🔍 UI Testing: 26/26 tests passed (100%)](#-ui-testing-2626-tests-passed-100)
+    - [⚡ API Testing: 14/14 tests passed (100%)](#-api-testing-1414-tests-passed-100)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+    - [🔧 Prerequisites](#-prerequisites)
+    - [📥 Installation](#-installation)
+- [🎯 Running Tests](#-running-tests)
+    - [🥒 Test Execution via CucumberTestRunner](#-test-execution-via-cucumbertestrunner)
+        - [1. Run All Tests](#1-run-all-tests)
+        - [2. Run All UI Tests](#2-run-all-ui-tests)
+        - [3. Run All API Tests](#3-run-all-api-tests)
+        - [4. Run Specific Functionality](#4-run-specific-functionality)
+        - [5. Run Specific Test Case](#5-run-specific-test-case)
+    - [▶️ Test Execution via Maven](#-test-execution-via-maven)
+    - [🏷️ Tag Hierarchy](#-tag-hierarchy)
+- [📊 Reporting](#-reporting)
+- [📝 Logging](#-logging)
+    - [🎚️ Levels](#-levels)
+    - [🧾 Format](#-format)
+- [🚦 Continuous Integration](#-continuous-integration)
+    - [🔄 Workflow Steps](#-workflow-steps)
+- [⚙️ Configuration](#-configuration)
+- [📄 License](#-license)
 
 ## 🏗️ Architecture & Design Patterns
 
-This framework implements industry-standard patterns and best practices:
+This framework incorporates industry-standard design patterns and best practices to ensure maintainability, reliability,
+and efficient test execution:
 
-- **Page Object Model (POM)**: Encapsulates page elements and interactions for maintainability
-- **Singleton Pattern**: Manages browser instances and resource pooling
-- **Behavior-Driven Development (BDD)**: Cucumber-based feature files for clear, non-technical test specifications
-- **Separation of Concerns**: Distinct layers for page objects, step definitions, managers, and business logic
+- **Page Object Model (POM)**: Centralizes UI element locators and page interactions, simplifying maintenance.
+- **Singleton Pattern**: Ensures a single browser instance is managed and reused throughout the test execution
+  lifecycle.
+- **Behavior-Driven Development (BDD)**: Uses Cucumber feature files written in Gherkin to define test scenarios in a
+  human-readable format.
+- **Explicit Waits**: Synchronizes test execution with application behavior by waiting for specific conditions, reducing
+  timing-related test failures.
+- **Test Data Generation**: Leverages JavaFaker to generate realistic and dynamic test data, supporting varied and
+  repeatable
+  test scenarios.
+- **Comprehensive Logging**: Uses Log4j 2 to record execution events and relevant diagnostic information.
+- **Test Execution Reporting**: Integrates ExtentReports to generate interactive HTML reports with execution results.
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ## 🛠️ Tech Stack
 
-| Component | Technology | Version |
-|-----------|-----------|---------|
-| **Language** | Java | 21 |
-| **Test Framework** | JUnit 5 (Jupiter) | 6.1.0 |
-| **BDD Tool** | Cucumber | 7.34.3 |
-| **Browser Automation** | Selenium WebDriver | 4.44.0 |
-| **API Testing** | REST Assured | 6.0.1 |
-| **Build Tool** | Maven | - |
-| **Logging** | Log4j 2 | 2.26.0 |
-| **Test Data** | JavaFaker | 1.0.2 |
-| **Excel Handling** | Apache POI | 5.5.1 |
-| **Reporting** | ExtentReports | 5.1.2 |
-| **Email Reporting** | Jakarta Mail | 2.0.2 |
+| Component          | Technology         | Version |
+|--------------------|--------------------|---------|
+| **Language**       | Java               | 21      |
+| **Test Framework** | JUnit 5 (Jupiter)  | 6.1.0   |
+| **BDD Tool**       | Cucumber           | 7.34.3  |
+| **UI Automation**  | Selenium WebDriver | 4.44.0  |
+| **API Automation** | REST Assured       | 6.0.1   |
+| **Build Tool**     | Maven              | 3.9.16  |
+| **Logging**        | Log4j 2            | 2.26.0  |
+| **Test Data**      | JavaFaker          | 1.0.2   |
+| **File Utilities** | Apache Commons IO  | 2.22.0  |
+| **Reporting**      | ExtentReports      | 5.1.2   |
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+## 🧪 Test Coverage Summary
+
+### 🔍 UI Testing: 26/26 tests passed (100%)
+
+- **Authentication**: User authentication and registration flows - **5** tests.
+- **Common**: Home page, contact us, and subscription functionality - **6** tests.
+- **Orders**: Checkout process - **5** tests.
+- **Products**: Product browsing and shopping cart functionality - **10** tests.
+
+### ⚡ API Testing: 14/14 tests passed (100%)
+
+- **Authentication**: User authentication flows - **4** tests.
+- **Brands**: Brand-related operations - **2** tests.
+- **Products**: Product-related operations - **4** tests.
+- **User Account**: User account management - **4** tests.
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ## 📁 Project Structure
 
 ```
 automation-exercise-atf/
-├── src/main/java/com/stefan/automation/
-│   ├── CucumberTestRunner.java          # Test execution entry point with tag configuration
-│   ├── context/                         # Test execution context & shared state
-│   ├── managers/                        # Driver, wait, and resource managers
-│   ├── models/                          # Data models for test objects
-│   ├── pageobjects/                     # Page Object Model implementations
-│   └── stepdefinitions/                 # Cucumber step definitions (UI & API)
+├── .github/                                  # GitHub workflows
 │
-├── src/main/resources/
-│   ├── features/                        # BDD feature files organized by functionality
-│   ├── log4j2.xml                       # Logging configuration
-│   └── config/                          # Application & environment configuration
+├── src/
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/stefan/automation/
+│   │   │       ├── context/                  # Test execution context and shared state
+│   │   │       ├── managers/                 # Driver, wait, and resource managers
+│   │   │       ├── models/                   # Data models for test objects
+│   │   │       ├── pageobjects/              # Page Object Model implementations
+│   │   │       └── stepdefinitions/          # Cucumber step definitions for UI and API tests
+│   │   │
+│   │   └── resources/
+│   │       ├── features/
+│   │       │   ├── api/                      # API test feature files
+│   │       │   └── ui/                       # UI test feature files
+│   │       ├── config.properties             # Application and environment configuration
+│   │       └── log4j2.xml                    # Logging configuration
+│   │
+│   └── test/
+│       └── java/
+│           └── com/stefan/automation/
+│               └── CucumberTests.java        # Cucumber test runner
 │
-├── pom.xml                              # Maven dependencies & build configuration
-└── README.md                            # This file
+├── .dockerignore                             # Files excluded from Docker build context
+├── .gitignore                                # Files excluded from version control
+├── Dockerfile                                # Docker image build configuration
+├── LICENSE                                   # Project license
+├── pom.xml                                   # Maven dependencies and build configuration
+└── README.md                                 # Project documentation
 ```
+
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 🔧 Prerequisites
 
 - **Java 21** or higher
-- **Maven 3.8.0** or higher
-- **Chrome/Firefox** browser (Selenium WebDriver compatible)
+- **Maven 3.9.16** or higher
 
-### Installation
+### 📥 Installation
 
 1. **Clone the repository**
    ```
    git clone https://github.com/stefan123283/automation-exercise-atf.git
+   ```
+
+2. **Navigate to the project directory**
+    ```
    cd automation-exercise-atf
    ```
 
-2. **Build the project**
-   - Use Maven to resolve dependencies (instructions in pom.xml)
-   - Or import directly into your IDE (IntelliJ, Eclipse)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ## 🎯 Running Tests
 
-### Test Execution via CucumberTestRunner
+### 🥒 Test Execution via CucumberTestRunner
 
-Tests are executed through the `CucumberTestRunner` class by modifying the `@ConfigurationParameter` annotation with appropriate Cucumber tags.
-
-### Tag-Based Execution Examples
+Tests are executed through the `CucumberTestRunner` class by modifying the `@ConfigurationParameter` annotation with
+appropriate Cucumber tags.
 
 #### 1. **Run All Tests**
+
 ```java
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "")
 ```
 
 #### 2. **Run All UI Tests**
+
 ```java
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@ui")
 ```
 
 #### 3. **Run All API Tests**
+
 ```java
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@api")
 ```
 
-#### 4. **Run Specific Functionality (e.g., Authentication)**
+#### 4. **Run Specific Functionality**
+
 ```java
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@ui and @authentification")
 ```
 
 #### 5. **Run Specific Test Case**
+
 ```java
 @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@loginUserWithCorrectEmailAndPassword")
 ```
 
-### Running via Maven
+### ▶️ Test Execution via Maven
 
 Tests can also be executed using Maven from the project root. For a full test run, use:
+
 ```bash
 mvn clean test
 ```
 
-
-### Tag Hierarchy
+### 🏷️ Tag Hierarchy
 
 Each feature file is organized with three levels of tags for flexible targeting:
 
@@ -124,125 +203,78 @@ Each feature file is organized with three levels of tags for flexible targeting:
 @authentification                             # Level 2: Feature/Module
 @loginUserWithCorrectEmailAndPassword         # Level 3: Specific Test Case (Unique)
 Scenario: Login with correct email and password
-  ...
+...
 ```
 
-**Examples:**
-- `@ui` → All 26 UI test scenarios
-- `@api` → All 14 API test scenarios
-- `@ui and @authentification` → All authentication-related UI tests
-- `@loginUserWithCorrectEmailAndPassword` → Single specific test
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ## 📊 Reporting
 
-This framework generates comprehensive test reports:
+Test execution reports are automatically generated using the **ExtentReports** library, providing a detailed summary of
+test results. Screenshots are also captured for failed tests to simplify debugging and troubleshooting.
 
-### Local HTML Reports
-- Generated by ExtentReports after test execution
-- Located in project root directory (check for `extent-report.html`)
-- Includes screenshots, logs, and execution timelines
+- **Report location**: `reports/ExtentReport.html`
+- **Screenshots location**: `reports/screenshots/`
 
-### Email Reports
-- Automated email delivery of test results
-- Configured via Jakarta Mail
-- Includes summary statistics and detailed failure information
+[⬆ Back to Table of Contents](#-table-of-contents)
 
-### Console Logging
-- Real-time test execution logs via Log4j 2
-- Configurable log levels in `log4j2.xml`
-- Helps with debugging and audit trails
+## 📝 Logging
 
+The project uses **Log4j2** for logging application events and providing visibility into test execution.
 
-## 🚦 Continuous Integration (GitHub Actions)
+Logs are written to both the console and a log file (`logs/application.log`), making them accessible during test
+execution and available for later analysis.
 
-This repository is configured with GitHub Actions to run the test suite automatically on pushes and pull requests. Workflow files live under `.github/workflows/` and are set up to execute the Maven test command (e.g., `mvn clean test`) to validate changes. Check the Actions tab in the GitHub repository to view run history, logs, and artifacts.
+### 🎚️ Levels
 
-## 🧪 Test Coverage Summary
+- `DEBUG` - detailed debugging information.
+- `INFO` - general information about execution progress.
+- `WARN` - warnings about potential issues.
+- `ERROR` - errors encountered during execution.
 
-### UI Testing (26 scenarios)
-- **Authentication**: Login/Logout functionality
-- **User Management**: Registration, profile updates, account deletion
-- **E-commerce Operations**: Product browsing, cart management, checkout
-- **Search & Filtering**: Product search and category filtering
-- **Contact & Feedback**: Contact form submissions
+The active logging level is controlled by the root logger configuration in the `log4j2.xml` file. By default, it is set
+to
+`INFO`.
 
-### API Testing (14 scenarios)
-- **Authentication APIs**: Login and registration endpoints
-- **Product APIs**: Retrieve product lists and details
-- **User APIs**: CRUD operations for user accounts
-- **Order APIs**: Order creation and retrieval
-- **Account Endpoints**: Account-related operations
+### 🧾 Format
 
-## 🔑 Key Features
+```text
+yyyy-MM-dd HH:mm:ss [thread] LEVEL LoggerName - Message
+```
 
-✨ **Comprehensive & Complete**
-- 100% test case coverage (40/40 scenarios automated)
-- Comprehensive error handling and retry mechanisms
-- Detailed logging and reporting
+[⬆ Back to Table of Contents](#-table-of-contents)
 
-✨ **Maintainable Code**
-- Page Object Model for UI scalability
-- Clear separation between test logic and page interactions
-- Well-organized step definitions
+## 🚦 Continuous Integration
 
-✨ **BDD Approach**
-- Human-readable Gherkin feature files
-- Non-technical stakeholder communication
-- Clear acceptance criteria documentation
+The project uses **GitHub Actions** to automatically execute the Selenium test suite in a CI environment whenever
+changes
+are pushed to the repository.
 
-✨ **Robust Infrastructure**
-- Singleton pattern for resource management
-- Intelligent wait strategies
-- Cross-browser compatibility (Chrome/Firefox)
+The workflow is defined in the `.github/workflows/` directory and runs on an Ubuntu environment.
 
-## 📝 Framework Highlights
+### 🔄 Workflow Steps
 
-| Feature | Implementation | Benefit |
-|---------|---|---|
-| **Page Object Model** | Centralized element locators | Easy maintenance when UI changes |
-| **Singleton Pattern** | Single browser instance | Resource optimization & faster execution |
-| **BDD with Cucumber** | Feature files in plain English | Non-technical stakeholder involvement |
-| **Local Reporting** | ExtentReports HTML dashboards | Visual test execution analytics |
-| **Email Reporting** | Automated report distribution | Stakeholder updates without manual intervention |
-| **Comprehensive Logging** | Log4j 2 configuration | Detailed execution trail for debugging |
-| **Test Data Generation** | JavaFaker library | Realistic and dynamic test scenarios |
+1. Checks out the repository.
+2. Sets up Java 21 using the Eclipse Temurin distribution.
+3. Configures Maven dependency caching to improve build efficiency.
+4. Executes the test suite using mvn clean test.
+5. Uploads the generated Extent Report as a workflow artifact, even if the tests fail.
 
-## 🛠️ Dependencies & Rationale
+[⬆ Back to Table of Contents](#-table-of-contents)
 
-- **Selenium**: Industry-standard browser automation
-- **Cucumber**: BDD framework for readable test specifications
-- **JUnit 5**: Modern Java testing framework with parameterization support
-- **REST Assured**: Fluent API testing library
-- **ExtentReports**: Professional, visually appealing HTML reports
-- **Log4j 2**: Production-grade logging framework
-- **Jakarta Mail**: Email reporting capability
-- **Apache POI**: Excel data handling for parameterized tests
+## ⚙️ Configuration
 
-## 📚 Best Practices Implemented
+The project uses a `config.properties` file to centralize application settings and test execution parameters.
 
-1. ✅ Explicit waits instead of hardcoded sleeps
-2. ✅ Descriptive test names reflecting business scenarios
-3. ✅ Reusable step definitions avoiding code duplication
-4. ✅ Proper exception handling and logging
-5. ✅ Data-driven testing with parameterization
-6. ✅ Comprehensive reporting with screenshots on failures
-7. ✅ Clear separation between test data and test logic
-8. ✅ Version control with meaningful commit messages
+The configuration includes the following properties:
 
-## 🎓 Learning & Portfolio Value
-
-This project demonstrates:
-- Strong understanding of test automation principles
-- Experience with industry-standard tools and frameworks
-- Ability to implement design patterns in QA
-- BDD methodology and collaboration with non-technical stakeholders
-- End-to-end testing strategy (UI + API)
-- Professional reporting and documentation
-
-## 📧 Questions or Suggestions?
-
-Feel free to explore the code structure and feature files. The framework is thoroughly documented and structured for clarity.
+- `applicationUrl` – Specifies the base URL of the application under test.
+- `pageLoadWait` – Defines the maximum wait time for page loading, in seconds.
+- `explicitWait` – Defines the maximum wait time for explicit wait conditions, in seconds.
+- `headlessMode` – Controls whether the browser runs in headless mode, without a visible UI.
 
 ## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+[⬆ Back to Table of Contents](#-table-of-contents)

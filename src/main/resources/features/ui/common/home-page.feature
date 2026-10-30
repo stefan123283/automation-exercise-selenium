@@ -13,7 +13,7 @@ Feature: Home page functionality
 
   @ui
   @common
-  @VerifyScrollUpUsingArrowButtonAndScrollDownFunctionality
+  @verifyScrollUpUsingArrowButtonAndScrollDownFunctionality
   Scenario: Verify scroll up using 'Arrow' button and scroll down functionality
     Then Home page is visible
     When User scrolls to bottom of page
